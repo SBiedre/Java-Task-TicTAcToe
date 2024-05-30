@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hey! Let's play tic tac toe!");
+        int[][] grid = new int[3][3];
+        Scanner scanner = new Scanner(System.in);
+        boolean gameWon = false;
+
+        while (!gameWon) {
+            printGrid(grid);
+            System.out.println("In which row do you want to enter your move? Enter row (0, 1, or 2): ");
+            int row = scanner.nextInt();
+            System.out.println("In which column do you want to enter your move? Enter column (0, 1, or 2): ");
+            int column = scanner.nextInt();
+
+            if (isValidMove(grid, row, column)) {
+                grid[row][column] = 1;
+                if (checkRow(grid, row)) {
+                    printGrid(grid);
+                    System.out.println("Congratulations! You won by filling row " + row + "!");
+                    gameWon = true;
+                }
+            } else {
+                System.out.println("Invalid move. Try again.");
+            }
+        }
+
+        scanner.close();
+    }
+
+    public static void printGrid(int[][] grid) {
+        System.out.println("Current game grid:");
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(grid[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static boolean isValidMove(int[][] grid, int row, int col) {
+        return row >= 0 && row < 3 && col >= 0 && col < 3 && grid[row][col] == 0;
+    }
+
+    public static boolean checkRow(int[][] grid, int row) {
+        for (int i = 0; i < 3; i++) {
+            if (grid[row][i] != 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
